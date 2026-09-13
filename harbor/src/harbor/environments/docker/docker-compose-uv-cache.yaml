@@ -1,0 +1,14 @@
+services:
+  main:
+    volumes:
+      # Shared read-write uv cache: package wheels, sdists, Python interpreters,
+      # PyPI metadata, and git object db all accumulate across runs.
+      - ${HOST_UV_CACHE_PATH}:/root/.cache/uv:rw
+      # Anonymous volume for script environments (uv run parser.py).
+      # uv creates a venv here keyed by script+requirements hash; 16 containers
+      # all creating the same environment concurrently on Lustre would corrupt the
+      # shared directory via failed flock(). An anonymous volume gives each
+      # container an isolated, local-SSD-backed (ext4, exec-allowed) environments
+      # dir — venv creation is still fast because wheels are hardlinked from the
+      # shared bind-mount above. The volume is auto-removed when the container stops.
+      - /root/.cache/uv/environments-v2

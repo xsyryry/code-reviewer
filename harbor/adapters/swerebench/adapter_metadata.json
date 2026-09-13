@@ -1,0 +1,38 @@
+[
+  {
+    "adapter_name": "swerebench",
+    "adapter_builders": [],
+    "original_benchmark": [
+      {
+        "split": "test",
+        "size": 21336,
+        "harness": "agent",
+        "supported_agents": ["openhands", "codex", "claude-code"],
+        "adaptable": true,
+        "notes": "Full SWE-rebench test split with 21,336 tasks from 3,400+ Python repos."
+      },
+      {
+        "split": "filtered",
+        "size": 6542,
+        "harness": "agent",
+        "supported_agents": ["openhands", "codex", "claude-code"],
+        "adaptable": true,
+        "notes": "Curated subset of 6,542 tasks used for the SWE-rebench leaderboard."
+      }
+    ],
+    "harbor_adapter": [
+      {
+        "split": "filtered",
+        "adapted_benchmark_size": 6542,
+        "parity_benchmark_size": null,
+        "parity_sampling_rate": null,
+        "registry_benchmark_size": null,
+        "added_agents": null,
+        "parity_matching_agents": null,
+        "parity_unmatching_agents": null,
+        "parity_costs": null,
+        "notes": "Initial adapter implementation. Parity experiments pending."
+      }
+    ]
+  }
+]

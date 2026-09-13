@@ -1,0 +1,48 @@
+# Harbor Job Configuration Example
+# 用于在 SWE-Lego codebase 内使用 OpenHands + Opus 进行 Code Review
+
+job_name: "code_review_opus"
+jobs_dir: "./jobs"
+n_attempts: 1
+timeout_multiplier: 1.0
+debug: true
+
+# Orchestrator 配置
+orchestrator:
+  type: local
+  n_concurrent: 1  # 并发数
+
+# 环境配置 (使用 Docker)
+environment:
+  type: docker
+  delete: true  # 完成后删除容器
+  force_build: false
+
+# Verifier 配置
+verifier:
+  enabled: false  # Code Review 不需要验证
+
+# Agent 配置
+agents:
+  - name: openhands
+    model_name: "openai/claude-opus-4-6-thinking"  # 通过 LiteLLM 调用 Opus
+    kwargs:
+      # OpenHands 特定参数
+      version: "latest"
+
+# 数据集配置 (本地路径)
+datasets:
+  - type: local
+    path: "./tasks/code_review"  # 本地 task 目录
+
+# 或者使用 Harbor 注册表中的数据集
+# datasets:
+#   - type: registry
+#     name: "swe-bench-verified"
+#     version: "1.0"
+
+# Tasks 配置 (可选，如果使用 dataset 则自动加载)
+tasks: []
+
+# Metrics 配置
+metrics: []

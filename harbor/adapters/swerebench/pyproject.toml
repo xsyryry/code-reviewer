@@ -1,0 +1,10 @@
+[project]
+name = "swerebench-harbor-adapter"
+version = "0.1.0"
+description = "SWE-rebench to Harbor adapter — converts SWE-rebench instances into Harbor task directories"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "datasets>=2.16.1",
+    "swebench @ git+https://github.com/SWE-rebench/SWE-bench-fork.git",
+]

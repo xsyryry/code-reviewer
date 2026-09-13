@@ -1,0 +1,6 @@
+services:
+  main:
+    volumes:
+      # Pre-provisioned official Astral uv binary for linux/amd64 containers.
+      # This avoids fetching https://astral.sh/uv/install.sh during agent setup.
+      - ${HOST_UV_BIN_PATH}:/usr/local/bin/uv:ro

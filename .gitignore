@@ -1,0 +1,35 @@
+# .gitignore
+__pycache__/
+*.pyc
+*.pyo
+.env
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Data (downloaded separately)
+data/
+LLaMA-Factory/data/
+outputs/
+
+# Model weights
+models/
+
+# Logs
+*.log
+api_logs/
+wandb/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+logs/
+datasets/
+docs/
