@@ -1,4 +1,4 @@
-<h1 align="center"> SWE-Review: Closing the Loop on Issue Resolution with Agentic Code Review </h1>
+<h1 align="center"> Code Reviewer: Closing the Loop on Issue Resolution with Agentic Code Review </h1>
 
 <p align="center">
 <a href="https://arxiv.org/abs/2607.06065" > 📖 Paper</a>
@@ -18,7 +18,7 @@
     <br>
 </p>
 
-**SWE-Review** turns one-shot PR generation into closed-loop issue resolution with agentic code review. Given an AI-generated PR, a reviewer agent explores the repository, decides whether the PR should be accepted, and provides structured feedback for revision.
+**Code Reviewer** turns one-shot PR generation into closed-loop issue resolution with agentic code review. Given an AI-generated PR, a reviewer agent explores the repository, decides whether the PR should be accepted, and provides structured feedback for revision.
 
 Key results on SWE-bench Verified:
 - **Agentic review continuously improves PRs**: resolve rate rises from 27.5% to 56.9% (Qwen3-30B-A3B) through iterative review-revision
@@ -28,7 +28,7 @@ Key results on SWE-bench Verified:
 
 ## Demo
 
-> ▶ SWE-Review in action — resolving a real GitHub issue with the generate–review–revise loop, powered by the [Claude Code plugin](https://github.com/LegoX/cc-swe-review).
+> ▶ Code Reviewer in action — resolving a real GitHub issue with the generate–review–revise loop, powered by the [Claude Code plugin](https://github.com/LegoX/cc-swe-review).
 
 <p align="center">
     <img src="assets/demo.gif" width="1000"/>
@@ -42,12 +42,12 @@ Key results on SWE-bench Verified:
 | SWE-Review-Traj | [HuggingFace](https://huggingface.co/datasets/Lego-X/SWE-Review-Traj) | 8,914 decision-correct + 5,242 decision-incorrect review trajectories |
 | SWE-Review-8B | [HuggingFace](https://huggingface.co/Lego-X/SWE-Review-8B) | Qwen3-8B fine-tuned reviewer |
 | SWE-Review-30B-A3B | [HuggingFace](https://huggingface.co/Lego-X/SWE-Review-30B-A3B) | Qwen3-30B-A3B fine-tuned reviewer |
-| Claude Code Plugin | [GitHub](https://github.com/LegoX/cc-swe-review) | Use SWE-Review directly in Claude Code |
+| Claude Code Plugin | [GitHub](https://github.com/LegoX/cc-swe-review) | Use Code Reviewer directly in Claude Code |
 
 ## Repo Structure
 
 ```
-SWE-Review/
+code-reviewer/
 ├── SWE-Review-Bench/       # Benchmark evaluation (scripts, metrics, README)
 ├── scripts/
 │   ├── train/              # Training scripts (serve, sft, review, eval)
@@ -63,8 +63,8 @@ SWE-Review/
 ## 1. 📦 Installation
 
 ```bash
-git clone https://github.com/LegoX/SWE-Review.git
-cd SWE-Review
+git clone https://github.com/xsyryry/code-reviewer.git
+cd code-reviewer
 ```
 
 #### 1.1 vLLM environment (model serving)
@@ -332,7 +332,7 @@ The script handles:
 
 ```bibtex
 @misc{wang2026swereview,
-      title={SWE-Review: Closing the Loop on Issue Resolution with Agentic Code Review}, 
+      title={Code Reviewer: Closing the Loop on Issue Resolution with Agentic Code Review},
       author={Ruoyu Wang and Jierun Chen and Shaowei Wang and Chaofan Tao and Sidi Yang and Yuxin Jiang and Kim-Hui Yap and Lifeng Shang and Xiaohui Li and Haoli Bai},
       year={2026},
       eprint={2607.06065},
