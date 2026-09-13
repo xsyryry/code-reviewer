@@ -220,35 +220,3 @@ outputs/official100-new/retry50/results-final/2026-09-12__22-49-35/astropy__astr
 同样的 31 个 PR 上，Review-SFT 模型显著缓解了通用模型的 over-rejection，但决策偏置转向另一端，出现明显 over-approval。
 
 Paired transition: Luna 的 12 个 False Reject 中，**11 个**转为 True Accept；但 Luna 原本正确识别的 bad PR 中，**7 个**转为 False Accept。
-
-## Demo
-
-> ▶ Code Reviewer in action — resolving a real GitHub issue with the generate–review–revise loop, powered by the [Claude Code plugin](https://github.com/LegoX/cc-swe-review).
-
-<p align="center">
-    <img src="assets/demo.gif" width="1000"/>
-</p>
-
-## Released Resources
-
-| Resource | Link | Description |
-|----------|------|-------------|
-| SWE-Review-Bench | [HuggingFace](https://huggingface.co/datasets/Lego-X/SWE-Review-Bench) | 1,384 AI-generated PRs across 3 quality tiers |
-| SWE-Review-Traj | [HuggingFace](https://huggingface.co/datasets/Lego-X/SWE-Review-Traj) | 8,914 decision-correct + 5,242 decision-incorrect review trajectories |
-| SWE-Review-8B | [HuggingFace](https://huggingface.co/Lego-X/SWE-Review-8B) | Qwen3-8B fine-tuned reviewer |
-| SWE-Review-30B-A3B | [HuggingFace](https://huggingface.co/Lego-X/SWE-Review-30B-A3B) | Qwen3-30B-A3B fine-tuned reviewer |
-| Claude Code Plugin | [GitHub](https://github.com/LegoX/cc-swe-review) | Use Code Reviewer directly in Claude Code |
-
-## Repo Structure
-
-```
-code-reviewer/
-├── SWE-Review-Bench/       # Benchmark evaluation (scripts, metrics, README)
-├── scripts/
-│   ├── train/              # Training scripts (serve, sft, review, eval)
-│   └── data_pipeline/      # Data download and preparation
-├── harbor/                 # Agent orchestration framework (local install)
-├── configs/                # LLaMA-Factory training configs
-├── prompts/                # All prompts used in the paper (verbatim)
-└── SWE-bench/              # SWE-bench evaluation harness (local install)
-```
