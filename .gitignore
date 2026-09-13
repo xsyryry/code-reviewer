@@ -33,3 +33,6 @@ Thumbs.db
 logs/
 datasets/
 docs/
+
+# Local-only private notes and backups
+.local-only/
