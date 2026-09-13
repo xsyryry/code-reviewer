@@ -1,0 +1,163 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Code Reviewer architecture</title>
+  <desc id="desc">A clean three-stage architecture diagram for agentic code review: inputs, evidence-driven review loop, decision and verification.</desc>
+  <defs>
+    <linearGradient id="surface" x1="54" y1="44" x2="1146" y2="716" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#101827"/>
+      <stop offset="1" stop-color="#07111F"/>
+    </linearGradient>
+    <linearGradient id="primary" x1="416" y1="244" x2="784" y2="390" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2563EB"/>
+      <stop offset="0.54" stop-color="#4F46E5"/>
+      <stop offset="1" stop-color="#0F766E"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#60A5FA"/>
+      <stop offset="0.55" stop-color="#A78BFA"/>
+      <stop offset="1" stop-color="#34D399"/>
+    </linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" stroke="#94A3B8" stroke-opacity="0.055"/>
+    </pattern>
+    <filter id="shadow" x="-12%" y="-18%" width="124%" height="136%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#020617" flood-opacity="0.34"/>
+    </filter>
+    <marker id="arrowBlue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2 2L10 6L2 10" stroke="#60A5FA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2 2L10 6L2 10" stroke="#34D399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <style>
+      .font { font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; }
+      .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; fill: #67E8F9; }
+      .h1 { font-size: 30px; font-weight: 780; fill: #F8FAFC; letter-spacing: 0; }
+      .body { font-size: 15px; fill: #CBD5E1; }
+      .muted { font-size: 13px; fill: #94A3B8; }
+      .tiny { font-size: 11px; fill: #64748B; }
+      .label { font-size: 15px; font-weight: 700; fill: #E5E7EB; }
+      .module { font-size: 14px; font-weight: 700; fill: #E5E7EB; }
+      .card { fill: #111827; stroke: #334155; stroke-width: 1; }
+      .lane { fill: #0B1220; stroke: #1E293B; stroke-width: 1; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="760" rx="30" fill="#F8FAFC"/>
+  <rect x="42" y="36" width="1116" height="688" rx="28" fill="url(#surface)"/>
+  <rect x="42" y="36" width="1116" height="688" rx="28" fill="url(#grid)"/>
+  <rect x="43" y="37" width="1114" height="686" rx="27" stroke="url(#accent)" stroke-opacity="0.28"/>
+
+  <g class="font">
+    <text x="82" y="88" class="mono" font-size="13" fill="#38BDF8">Code Reviewer</text>
+    <text x="82" y="124" class="h1">Agentic Code Review 工作流</text>
+    <text x="82" y="154" class="body">Reviewer 会先收集代码仓库证据，再判断 Patch 是否真正解决 Issue。</text>
+
+    <rect x="76" y="196" width="272" height="432" rx="24" class="lane"/>
+    <rect x="376" y="196" width="448" height="432" rx="24" fill="#0B1220" stroke="url(#accent)" stroke-opacity="0.55"/>
+    <rect x="852" y="196" width="272" height="432" rx="24" class="lane"/>
+
+    <text x="104" y="230" class="eyebrow">输入 / Inputs</text>
+    <text x="404" y="230" class="eyebrow">证据工作区 / Evidence</text>
+    <text x="880" y="230" class="eyebrow">决策与验证 / Verification</text>
+
+    <g filter="url(#shadow)">
+      <rect x="104" y="260" width="216" height="96" rx="18" class="card"/>
+      <rect x="124" y="282" width="42" height="42" rx="12" fill="#172554" stroke="#2563EB"/>
+      <path d="M137 300H152M137 310H158M137 320H150" stroke="#93C5FD" stroke-width="2" stroke-linecap="round"/>
+      <text x="184" y="300" class="label">问题 / Issue</text>
+      <text x="184" y="324" class="muted">预期行为</text>
+      <text x="184" y="344" class="muted">失败信号</text>
+    </g>
+
+    <g filter="url(#shadow)">
+      <rect x="104" y="404" width="216" height="96" rx="18" class="card"/>
+      <rect x="124" y="426" width="42" height="42" rx="12" fill="#1E1B4B" stroke="#6366F1"/>
+      <path d="M137 443H156M137 453H151M137 463H160" stroke="#C4B5FD" stroke-width="2" stroke-linecap="round"/>
+      <text x="184" y="444" class="label">候选 PR</text>
+      <text x="184" y="468" class="muted">Patch 与变更</text>
+      <text x="184" y="488" class="muted">实现代码</text>
+    </g>
+
+    <path d="M320 308H408" stroke="#60A5FA" stroke-width="2.2" stroke-linecap="round" marker-end="url(#arrowBlue)"/>
+    <path d="M320 452H408" stroke="#818CF8" stroke-width="2.2" stroke-linecap="round" marker-end="url(#arrowBlue)"/>
+
+    <g filter="url(#shadow)">
+      <rect x="416" y="260" width="368" height="130" rx="24" fill="url(#primary)"/>
+      <text x="600" y="312" text-anchor="middle" font-size="29" font-weight="800" fill="#FFFFFF">Code Reviewer</text>
+      <text x="600" y="340" text-anchor="middle" font-size="15" fill="#DBEAFE">Agent 审查循环</text>
+      <text x="600" y="364" text-anchor="middle" font-size="13" fill="#C7D2FE">Agentic Review Loop</text>
+    </g>
+
+    <g>
+      <rect x="416" y="424" width="164" height="72" rx="16" fill="#101827" stroke="#2563EB"/>
+      <text x="498" y="453" text-anchor="middle" class="module">探索代码仓库</text>
+      <text x="498" y="475" text-anchor="middle" class="muted">files · symbols · callers</text>
+
+      <rect x="620" y="424" width="164" height="72" rx="16" fill="#101827" stroke="#0F766E"/>
+      <text x="702" y="453" text-anchor="middle" class="module">定位根因</text>
+      <text x="702" y="475" text-anchor="middle" class="muted">Root Cause</text>
+
+      <rect x="416" y="526" width="164" height="72" rx="16" fill="#101827" stroke="#7C3AED"/>
+      <text x="498" y="555" text-anchor="middle" class="module">检查候选 Patch</text>
+      <text x="498" y="577" text-anchor="middle" class="muted">logic · risk</text>
+
+      <rect x="620" y="526" width="164" height="72" rx="16" fill="#101827" stroke="#059669"/>
+      <text x="702" y="555" text-anchor="middle" class="module">复现问题</text>
+      <text x="702" y="577" text-anchor="middle" class="muted">Run Reproduction</text>
+    </g>
+
+    <path d="M498 424V397" stroke="#475569" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M702 424V397" stroke="#475569" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M498 526V504" stroke="#475569" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M702 526V504" stroke="#475569" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M584 460H616" stroke="#475569" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M584 562H616" stroke="#475569" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M600 390V416" stroke="#94A3B8" stroke-width="1.8" stroke-linecap="round" marker-end="url(#arrowBlue)"/>
+
+    <path d="M792 326H884" stroke="#34D399" stroke-width="2.2" stroke-linecap="round" marker-end="url(#arrowGreen)"/>
+
+    <g filter="url(#shadow)">
+      <rect x="884" y="260" width="212" height="92" rx="18" class="card"/>
+      <text x="990" y="294" text-anchor="middle" class="label">结构化 Review</text>
+      <text x="990" y="318" text-anchor="middle" class="muted">证据 · 测试</text>
+      <text x="990" y="338" text-anchor="middle" class="muted">判断理由</text>
+    </g>
+
+    <g filter="url(#shadow)">
+      <rect x="884" y="388" width="212" height="98" rx="18" class="card"/>
+      <text x="990" y="420" text-anchor="middle" class="label">Review 决策</text>
+      <rect x="904" y="440" width="78" height="28" rx="14" fill="#052E2B" stroke="#14B8A6"/>
+      <text x="943" y="454" text-anchor="middle" font-size="12" font-weight="800" fill="#CCFBF1">通过</text>
+      <text x="943" y="466" text-anchor="middle" font-size="9" font-weight="700" fill="#CCFBF1">Approve</text>
+      <rect x="990" y="440" width="86" height="28" rx="14" fill="#2E1065" stroke="#8B5CF6"/>
+      <text x="1033" y="453" text-anchor="middle" font-size="11" font-weight="800" fill="#EDE9FE">请求修改</text>
+      <text x="1033" y="466" text-anchor="middle" font-size="8.5" font-weight="700" fill="#EDE9FE">Request Changes</text>
+    </g>
+
+    <g filter="url(#shadow)">
+      <rect x="884" y="524" width="212" height="86" rx="18" fill="#0E1B1A" stroke="#0F766E"/>
+      <text x="990" y="552" text-anchor="middle" class="label">Verifier</text>
+      <text x="990" y="576" text-anchor="middle" class="muted">正确 / 错误</text>
+      <text x="990" y="596" text-anchor="middle" class="muted">Reward</text>
+    </g>
+
+    <path d="M990 352V384" stroke="#34D399" stroke-width="2" stroke-linecap="round" marker-end="url(#arrowGreen)"/>
+    <path d="M990 486V520" stroke="#34D399" stroke-width="2" stroke-linecap="round" marker-end="url(#arrowGreen)"/>
+
+    <g>
+      <rect x="112" y="656" width="976" height="34" rx="17" fill="#0B1220" stroke="#1E293B"/>
+      <circle cx="186" cy="673" r="5" fill="#60A5FA"/>
+      <text x="204" y="678" class="tiny">输入</text>
+      <path d="M254 673H382" stroke="#334155" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="400" cy="673" r="5" fill="#818CF8"/>
+      <text x="418" y="678" class="tiny">探索证据</text>
+      <path d="M534 673H662" stroke="#334155" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="680" cy="673" r="5" fill="#22C55E"/>
+      <text x="698" y="678" class="tiny">验证 Patch</text>
+      <path d="M794 673H922" stroke="#334155" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="940" cy="673" r="5" fill="#34D399"/>
+      <text x="958" y="678" class="tiny">验证 Review</text>
+    </g>
+  </g>
+</svg>

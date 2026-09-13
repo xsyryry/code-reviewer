@@ -1,0 +1,149 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Benchmark Results</title>
+  <desc id="desc">131 PRs · SWE-Review-8B benchmark dashboard.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="720" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0B1120"/>
+      <stop offset="0.58" stop-color="#08111F"/>
+      <stop offset="1" stop-color="#051B1F"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="48" y1="142" x2="1152" y2="668" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#111827"/>
+      <stop offset="1" stop-color="#07131F"/>
+    </linearGradient>
+    <linearGradient id="goodCell" x1="288" y1="308" x2="492" y2="438" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0F766E" stop-opacity="0.42"/>
+      <stop offset="1" stop-color="#064E3B" stop-opacity="0.18"/>
+    </linearGradient>
+    <linearGradient id="badCell" x1="518" y1="308" x2="722" y2="438" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7F1D1D" stop-opacity="0.34"/>
+      <stop offset="1" stop-color="#4C1D95" stop-opacity="0.16"/>
+    </linearGradient>
+    <linearGradient id="faCell" x1="288" y1="470" x2="492" y2="600" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F97316" stop-opacity="0.46"/>
+      <stop offset="0.62" stop-color="#7C2D12" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#581C87" stop-opacity="0.22"/>
+    </linearGradient>
+    <linearGradient id="approveBar" x1="832" y1="0" x2="1092" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#14B8A6"/>
+      <stop offset="1" stop-color="#22C55E"/>
+    </linearGradient>
+    <linearGradient id="warnBar" x1="832" y1="0" x2="1092" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F97316"/>
+      <stop offset="1" stop-color="#FB7185"/>
+    </linearGradient>
+    <filter id="shadow" x="-18%" y="-18%" width="136%" height="144%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#020617" flood-opacity="0.3"/>
+    </filter>
+    <filter id="faGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="10" flood-color="#F97316" flood-opacity="0.34"/>
+    </filter>
+    <style>
+      text {
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+      }
+      .title { fill: #F8FAFC; font-size: 38px; font-weight: 840; letter-spacing: 0; }
+      .subtitle { fill: #94A3B8; font-size: 17px; font-weight: 650; }
+      .panel-title { fill: #E2E8F0; font-size: 18px; font-weight: 820; }
+      .axis { fill: #CBD5E1; font-size: 15px; font-weight: 760; }
+      .label { fill: #CBD5E1; font-size: 14px; font-weight: 720; }
+      .small { fill: #94A3B8; font-size: 12px; font-weight: 620; }
+      .num { fill: #FFFFFF; font-size: 66px; font-weight: 880; }
+      .metric { fill: #FFFFFF; font-size: 43px; font-weight: 880; }
+      .error-num { fill: #FDBA74; font-size: 52px; font-weight: 880; }
+      .grid { stroke: #334155; stroke-width: 1.2; opacity: 0.72; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="720" rx="32" fill="url(#bg)"/>
+  <rect x="42" y="36" width="1116" height="648" rx="28" fill="url(#panel)" stroke="#1E293B"/>
+  <path d="M42 136H1158" stroke="#1E293B"/>
+
+  <text x="82" y="93" class="title">Benchmark Results</text>
+  <text x="82" y="122" class="subtitle">131 PRs · SWE-Review-8B</text>
+
+  <g filter="url(#shadow)">
+    <rect x="70" y="166" width="690" height="498" rx="24" fill="#0B1220" stroke="#26364B"/>
+    <text x="104" y="207" class="panel-title">Confusion Matrix</text>
+    <text x="505" y="207" text-anchor="middle" class="axis">Reviewer 决策</text>
+    <text x="132" y="616" class="axis">真实状态</text>
+
+    <text x="390" y="254" text-anchor="middle" class="label">通过</text>
+    <text x="390" y="276" text-anchor="middle" class="small">Approve</text>
+    <text x="620" y="254" text-anchor="middle" class="label">请求修改</text>
+    <text x="620" y="276" text-anchor="middle" class="small">Request Changes</text>
+
+    <text x="124" y="374" class="label">已解决</text>
+    <text x="124" y="398" class="small">Resolved</text>
+    <text x="124" y="536" class="label">未解决</text>
+    <text x="124" y="560" class="small">Unresolved</text>
+
+    <path d="M270 292H740" class="grid"/>
+    <path d="M270 454H740" class="grid"/>
+    <path d="M270 616H740" class="grid"/>
+    <path d="M505 292V616" class="grid"/>
+
+    <g>
+      <rect x="288" y="308" width="204" height="130" rx="19" fill="url(#goodCell)" stroke="#14B8A6"/>
+      <text x="390" y="367" text-anchor="middle" class="num">77</text>
+      <text x="390" y="402" text-anchor="middle" class="label" fill="#CCFBF1">True Accept · TA</text>
+    </g>
+
+    <g>
+      <rect x="518" y="308" width="204" height="130" rx="19" fill="url(#badCell)" stroke="#FB7185"/>
+      <text x="620" y="367" text-anchor="middle" class="num">20</text>
+      <text x="620" y="402" text-anchor="middle" class="label" fill="#FECACA">False Reject · FR</text>
+    </g>
+
+    <g filter="url(#faGlow)">
+      <rect x="288" y="470" width="204" height="130" rx="19" fill="url(#faCell)" stroke="#FDBA74" stroke-width="2"/>
+      <text x="390" y="529" text-anchor="middle" class="num">27</text>
+      <text x="390" y="564" text-anchor="middle" class="label" fill="#FED7AA">False Accept · FA</text>
+    </g>
+
+    <g>
+      <rect x="518" y="470" width="204" height="130" rx="19" fill="url(#goodCell)" stroke="#14B8A6"/>
+      <text x="620" y="529" text-anchor="middle" class="num">7</text>
+      <text x="620" y="564" text-anchor="middle" class="label" fill="#CCFBF1">True Reject · TR</text>
+    </g>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="800" y="166" width="330" height="286" rx="24" fill="#0B1220" stroke="#26364B"/>
+    <text x="832" y="207" class="panel-title">核心 Metrics</text>
+
+    <text x="832" y="266" class="metric">64.1%</text>
+    <text x="832" y="292" class="small">Decision Accuracy</text>
+
+    <text x="832" y="344" class="metric">79.4%</text>
+    <text x="832" y="370" class="small">Resolved Accuracy</text>
+
+    <text x="832" y="418" class="metric">20.6%</text>
+    <text x="832" y="444" class="small">Unresolved Accuracy</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="800" y="464" width="330" height="134" rx="24" fill="#0B1220" stroke="#26364B"/>
+    <text x="832" y="499" class="panel-title">审查倾向</text>
+    <text x="1008" y="499" class="small">Decision Bias</text>
+
+    <text x="832" y="529" class="label">Approve</text>
+    <text x="1098" y="529" text-anchor="end" class="label">79.4%</text>
+    <rect x="832" y="542" width="266" height="12" rx="6" fill="#1E293B"/>
+    <rect x="832" y="542" width="211" height="12" rx="6" fill="url(#approveBar)"/>
+
+    <text x="832" y="571" class="label">Request Changes</text>
+    <text x="1098" y="571" text-anchor="end" class="label">20.6%</text>
+    <rect x="832" y="584" width="266" height="12" rx="6" fill="#1E293B"/>
+    <rect x="832" y="584" width="55" height="12" rx="6" fill="url(#warnBar)"/>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="800" y="612" width="330" height="52" rx="18" fill="#101827" stroke="#F97316" stroke-opacity="0.78"/>
+    <text x="832" y="637" class="panel-title" fill="#FED7AA">主要错误</text>
+    <text x="832" y="656" class="small">False Accept</text>
+    <text x="1018" y="652" text-anchor="end" class="error-num">27</text>
+    <text x="1032" y="630" class="small" fill="#FDBA74">/ 34</text>
+    <text x="1032" y="652" class="small" fill="#FDBA74">79.4%</text>
+  </g>
+</svg>

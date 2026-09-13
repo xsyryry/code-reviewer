@@ -1,0 +1,158 @@
+<svg width="1200" height="780" viewBox="0 0 1200 780" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Code Reviewer system architecture</title>
+  <desc id="desc">A numbered pipeline from benchmark task to Harbor, Code Reviewer, structured review, Verifier, and correctness reward, with a separate evidence workspace for repository exploration, root cause tracing, patch inspection, tests, sandbox execution, and model serving.</desc>
+  <defs>
+    <linearGradient id="surface" x1="40" y1="36" x2="1160" y2="744" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0F172A"/>
+      <stop offset="1" stop-color="#06131F"/>
+    </linearGradient>
+    <linearGradient id="agentFill" x1="548" y1="160" x2="842" y2="332" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2563EB"/>
+      <stop offset="0.55" stop-color="#4F46E5"/>
+      <stop offset="1" stop-color="#0F766E"/>
+    </linearGradient>
+    <linearGradient id="accentStroke" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#60A5FA"/>
+      <stop offset="0.52" stop-color="#A78BFA"/>
+      <stop offset="1" stop-color="#34D399"/>
+    </linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" stroke="#94A3B8" stroke-opacity="0.055"/>
+    </pattern>
+    <filter id="shadow" x="-14%" y="-20%" width="128%" height="140%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#020617" flood-opacity="0.34"/>
+    </filter>
+    <marker id="arrowBlue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2 2L10 6L2 10" stroke="#60A5FA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2 2L10 6L2 10" stroke="#34D399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrowMuted" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2 2L10 6L2 10" stroke="#64748B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <style>
+      .font { font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; }
+      .title { font-size: 30px; font-weight: 800; fill: #F8FAFC; letter-spacing: 0; }
+      .subtitle { font-size: 15px; fill: #CBD5E1; }
+      .section { font-size: 12px; font-weight: 780; letter-spacing: 0.08em; text-transform: uppercase; fill: #93C5FD; }
+      .step { font-size: 11px; font-weight: 820; letter-spacing: 0.08em; fill: #67E8F9; }
+      .label { font-size: 16px; font-weight: 760; fill: #F1F5F9; }
+      .body { font-size: 12px; fill: #AAB7CB; }
+      .tiny { font-size: 11px; fill: #748195; }
+      .micro { font-size: 10px; fill: #64748B; }
+      .panel { fill: #0B1220; stroke: #1E293B; stroke-width: 1; }
+      .card { fill: #111827; stroke: #334155; stroke-width: 1; }
+      .chip { fill: #0F172A; stroke: #334155; stroke-width: 1; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="780" rx="30" fill="#F8FAFC"/>
+  <rect x="42" y="36" width="1116" height="708" rx="28" fill="url(#surface)"/>
+  <rect x="42" y="36" width="1116" height="708" rx="28" fill="url(#grid)"/>
+  <rect x="43" y="37" width="1114" height="706" rx="27" stroke="url(#accentStroke)" stroke-opacity="0.28"/>
+
+  <g class="font">
+    <text x="82" y="84" class="mono" font-size="13" fill="#38BDF8">system architecture</text>
+    <text x="82" y="120" class="title">可验证的 Agent 审查流水线</text>
+    <text x="82" y="150" class="subtitle">从真实 PR 任务到证据驱动的 Review 决策，再到 Verifier Reward。</text>
+
+    <path d="M284 246H332" stroke="#60A5FA" stroke-width="2.2" stroke-linecap="round" marker-end="url(#arrowBlue)"/>
+    <path d="M514 246H562" stroke="#60A5FA" stroke-width="2.2" stroke-linecap="round" marker-end="url(#arrowBlue)"/>
+    <path d="M836 246H884" stroke="#34D399" stroke-width="2.2" stroke-linecap="round" marker-end="url(#arrowGreen)"/>
+    <path d="M994 318V358" stroke="#34D399" stroke-width="2.2" stroke-linecap="round" marker-end="url(#arrowGreen)"/>
+    <path d="M994 468V508" stroke="#34D399" stroke-width="2.2" stroke-linecap="round" marker-end="url(#arrowGreen)"/>
+
+    <g filter="url(#shadow)">
+      <rect x="82" y="188" width="202" height="116" rx="22" class="panel"/>
+      <text x="112" y="218" class="step">01</text>
+      <text x="152" y="218" class="label">Benchmark 任务</text>
+      <rect x="112" y="238" width="66" height="26" rx="13" fill="#172554" stroke="#2563EB"/>
+      <text x="145" y="255" text-anchor="middle" class="micro">Issue</text>
+      <rect x="188" y="238" width="66" height="26" rx="13" fill="#2E1065" stroke="#7C3AED"/>
+      <text x="221" y="255" text-anchor="middle" class="micro">Patch</text>
+      <text x="183" y="282" text-anchor="middle" class="body">repo + 元数据</text>
+
+      <rect x="332" y="188" width="182" height="116" rx="22" class="card"/>
+      <text x="362" y="218" class="step">02</text>
+      <text x="402" y="218" class="label">Harbor</text>
+      <text x="423" y="246" text-anchor="middle" class="body">任务编排</text>
+      <text x="423" y="266" text-anchor="middle" class="body">环境生命周期</text>
+      <text x="423" y="286" text-anchor="middle" class="tiny">结果收集</text>
+
+      <rect x="562" y="160" width="274" height="172" rx="28" fill="url(#agentFill)"/>
+      <text x="592" y="198" class="step" fill="#CFFAFE">03</text>
+      <text x="699" y="204" text-anchor="middle" font-size="23" font-weight="820" fill="#FFFFFF">OpenHands Agent 循环</text>
+      <text x="699" y="230" text-anchor="middle" font-size="14" fill="#DBEAFE">Agentic Review Loop</text>
+      <text x="699" y="252" text-anchor="middle" font-size="12" fill="#C7D2FE">主动决定需要什么证据</text>
+      <rect x="598" y="276" width="56" height="28" rx="14" fill="#0F172A" fill-opacity="0.62" stroke="#BFDBFE" stroke-opacity="0.55"/>
+      <text x="626" y="294" text-anchor="middle" font-size="11" font-weight="760" fill="#FFFFFF">推理</text>
+      <rect x="671" y="276" width="70" height="28" rx="14" fill="#0F172A" fill-opacity="0.62" stroke="#BFDBFE" stroke-opacity="0.55"/>
+      <text x="706" y="294" text-anchor="middle" font-size="11" font-weight="760" fill="#FFFFFF">工具调用</text>
+      <rect x="758" y="276" width="60" height="28" rx="14" fill="#0F172A" fill-opacity="0.62" stroke="#BFDBFE" stroke-opacity="0.55"/>
+      <text x="788" y="294" text-anchor="middle" font-size="11" font-weight="760" fill="#FFFFFF">观察</text>
+      <path d="M655 290H667" stroke="#BFDBFE" stroke-width="1.6" stroke-linecap="round" marker-end="url(#arrowBlue)"/>
+      <path d="M742 290H754" stroke="#BFDBFE" stroke-width="1.6" stroke-linecap="round" marker-end="url(#arrowBlue)"/>
+      <path d="M788 308C752 324 646 324 626 308" stroke="#BFDBFE" stroke-width="1.5" stroke-dasharray="4 6" stroke-linecap="round" marker-end="url(#arrowBlue)"/>
+
+      <rect x="884" y="188" width="220" height="116" rx="22" class="card"/>
+      <text x="914" y="214" class="step" fill="#34D399">04</text>
+      <text x="994" y="232" text-anchor="middle" class="label">结构化 Review</text>
+      <text x="994" y="256" text-anchor="middle" class="body">Approve / Request</text>
+      <text x="994" y="276" text-anchor="middle" class="body">证据 + 理由</text>
+      <text x="994" y="292" text-anchor="middle" class="tiny">Review 报告</text>
+
+      <rect x="884" y="358" width="220" height="110" rx="22" fill="#0E1B1A" stroke="#0F766E"/>
+      <text x="914" y="384" class="step" fill="#34D399">05</text>
+      <text x="994" y="402" text-anchor="middle" class="label">Verifier</text>
+      <text x="994" y="426" text-anchor="middle" class="body">对照 ground truth</text>
+      <text x="994" y="446" text-anchor="middle" class="tiny">审查正确性</text>
+
+      <rect x="884" y="508" width="220" height="88" rx="22" fill="#052E2B" stroke="#14B8A6"/>
+      <text x="914" y="534" class="step" fill="#5EEAD4">06</text>
+      <text x="994" y="552" text-anchor="middle" class="label">Reward</text>
+      <text x="994" y="574" text-anchor="middle" class="body">正确 / 错误</text>
+    </g>
+
+    <path d="M699 334V378" stroke="#64748B" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="5 7" marker-end="url(#arrowMuted)"/>
+    <path d="M676 380C610 356 568 352 516 360" stroke="#64748B" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="5 7" marker-end="url(#arrowMuted)"/>
+    <path d="M722 380C784 356 828 352 884 360" stroke="#64748B" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="5 7" marker-end="url(#arrowMuted)"/>
+
+    <g filter="url(#shadow)">
+      <rect x="156" y="396" width="660" height="258" rx="26" class="panel"/>
+      <text x="190" y="430" class="section">证据工作区 / Evidence</text>
+      <text x="190" y="452" class="body">代码探索与行为验证发生在主决策路径之外。</text>
+
+      <rect x="190" y="482" width="184" height="62" rx="18" class="chip"/>
+      <text x="282" y="508" text-anchor="middle" class="label">探索代码仓库</text>
+      <text x="282" y="528" text-anchor="middle" class="tiny">files · symbols · callers</text>
+
+      <rect x="396" y="482" width="184" height="62" rx="18" class="chip"/>
+      <text x="488" y="508" text-anchor="middle" class="label">定位根因</text>
+      <text x="488" y="528" text-anchor="middle" class="tiny">Root Cause</text>
+
+      <rect x="602" y="482" width="184" height="62" rx="18" class="chip"/>
+      <text x="694" y="508" text-anchor="middle" class="label">检查 Patch</text>
+      <text x="694" y="528" text-anchor="middle" class="tiny">逻辑 · 风险</text>
+
+      <rect x="190" y="566" width="184" height="62" rx="18" class="chip"/>
+      <text x="282" y="592" text-anchor="middle" class="label">执行测试</text>
+      <text x="282" y="612" text-anchor="middle" class="tiny">行为复现</text>
+
+      <rect x="396" y="566" width="184" height="62" rx="18" fill="#0C1A2B" stroke="#2563EB"/>
+      <text x="488" y="592" text-anchor="middle" class="label">Docker 仓库沙箱</text>
+      <text x="488" y="612" text-anchor="middle" class="tiny">isolated /testbed</text>
+
+      <rect x="602" y="566" width="184" height="62" rx="18" fill="#092722" stroke="#0F766E"/>
+      <text x="694" y="592" text-anchor="middle" class="label">Reviewer 模型</text>
+      <text x="694" y="612" text-anchor="middle" class="tiny">131K context</text>
+    </g>
+
+    <g opacity="0.92">
+      <rect x="856" y="636" width="248" height="58" rx="18" fill="#0B1220" stroke="#1E293B"/>
+      <text x="882" y="660" class="tiny">和单轮 Diff Review 不同</text>
+      <text x="882" y="678" class="micro">Agent 先收集证据，再做决策。</text>
+    </g>
+  </g>
+</svg>

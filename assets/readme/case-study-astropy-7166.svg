@@ -1,0 +1,194 @@
+<svg width="1200" height="780" viewBox="0 0 1200 780" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">一次真实 Agent 审查内部发生了什么？</title>
+  <desc id="desc">astropy__astropy-7166 的 Agent Event Trace，按模型、工具、验证、决策四条泳道展示关键步骤、独立根因诊断、证据上下文累积和最终 Verifier reward。</desc>
+  <defs>
+    <linearGradient id="surface" x1="42" y1="36" x2="1158" y2="744" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0F172A"/>
+      <stop offset="1" stop-color="#06131F"/>
+    </linearGradient>
+    <linearGradient id="decisionFill" x1="1032" y1="508" x2="1118" y2="668" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0E7490"/>
+      <stop offset="1" stop-color="#065F46"/>
+    </linearGradient>
+    <linearGradient id="accentStroke" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#60A5FA"/>
+      <stop offset="0.52" stop-color="#A78BFA"/>
+      <stop offset="1" stop-color="#34D399"/>
+    </linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" stroke="#94A3B8" stroke-opacity="0.055"/>
+    </pattern>
+    <filter id="shadow" x="-14%" y="-20%" width="128%" height="140%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#020617" flood-opacity="0.34"/>
+    </filter>
+    <marker id="arrowBlue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2 2L10 6L2 10" stroke="#60A5FA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2 2L10 6L2 10" stroke="#34D399" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <style>
+      .font { font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif; }
+      .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; }
+      .title { font-size: 30px; font-weight: 800; fill: #F8FAFC; letter-spacing: 0; }
+      .subtitle { font-size: 14px; fill: #CBD5E1; }
+      .section { font-size: 12px; font-weight: 780; letter-spacing: 0.08em; text-transform: uppercase; fill: #93C5FD; }
+      .label { font-size: 15px; font-weight: 760; fill: #F1F5F9; }
+      .body { font-size: 12px; fill: #CBD5E1; }
+      .tiny { font-size: 10.5px; fill: #94A3B8; }
+      .micro { font-size: 9.5px; fill: #94A3B8; }
+      .lane { fill: #0B1220; stroke: #1E293B; stroke-width: 1; }
+      .card { fill: #111827; stroke: #334155; stroke-width: 1; }
+      .chip { fill: #0F172A; stroke: #334155; stroke-width: 1; }
+      .model { fill: #172554; stroke: #60A5FA; }
+      .tool { fill: #1E1B4B; stroke: #8B5CF6; }
+      .valid { fill: #052E2B; stroke: #14B8A6; }
+      .decision { fill: #052E2B; stroke: #34D399; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="780" rx="30" fill="#F8FAFC"/>
+  <rect x="42" y="36" width="1116" height="708" rx="28" fill="url(#surface)"/>
+  <rect x="42" y="36" width="1116" height="708" rx="28" fill="url(#grid)"/>
+  <rect x="43" y="37" width="1114" height="706" rx="27" stroke="url(#accentStroke)" stroke-opacity="0.28"/>
+
+  <g class="font">
+    <text x="82" y="84" class="mono" font-size="13" fill="#38BDF8">Inside One Agentic Review</text>
+    <text x="82" y="120" class="title">一次真实 Agent 审查内部发生了什么？</text>
+    <text x="82" y="150" class="subtitle">astropy__astropy-7166 · 32 steps · 12m18s</text>
+
+    <g opacity="0.96">
+      <rect x="82" y="174" width="438" height="58" rx="20" class="card"/>
+      <text x="110" y="198" class="section">Agent Loop</text>
+      <text x="110" y="218" class="tiny">上下文 Context → 推理 Reason → 工具 Tool Call → 观察 Observation → 更新上下文</text>
+    </g>
+
+    <g opacity="0.96">
+      <rect x="548" y="174" width="238" height="58" rx="20" fill="#101827" stroke="#7C3AED"/>
+      <text x="574" y="198" class="section" fill="#C4B5FD">关键断点</text>
+      <text x="574" y="218" class="tiny" fill="#DDD6FE">Step 15：先确定 Root Cause，再读 Patch</text>
+    </g>
+
+    <g opacity="0.96">
+      <rect x="812" y="174" width="308" height="58" rx="20" class="card"/>
+      <text x="838" y="198" class="section" fill="#5EEAD4">证据上下文 · Evidence Context</text>
+      <text x="838" y="218" class="tiny">Issue → 源码 → 复现 → Patch → 测试 → Approve 0.95</text>
+    </g>
+
+    <rect x="78" y="258" width="126" height="418" rx="24" class="lane"/>
+    <path d="M78 373H204M78 471H204M78 569H204" stroke="#1E293B"/>
+    <text x="112" y="315" class="label">模型</text>
+    <text x="112" y="334" class="tiny">Model</text>
+    <text x="112" y="413" class="label">工具</text>
+    <text x="112" y="432" class="tiny">Tool</text>
+    <text x="112" y="511" class="label">验证</text>
+    <text x="112" y="530" class="tiny">Validation</text>
+    <text x="112" y="609" class="label">决策</text>
+    <text x="112" y="628" class="tiny">Decision</text>
+
+    <rect x="224" y="258" width="896" height="418" rx="24" fill="#0B1220" stroke="#1E293B"/>
+    <rect x="224" y="258" width="896" height="115" rx="24" fill="#0F172A" fill-opacity="0.42"/>
+    <rect x="224" y="471" width="896" height="98" fill="#08251F" fill-opacity="0.12"/>
+    <rect x="224" y="569" width="896" height="107" rx="24" fill="#052E2B" fill-opacity="0.10"/>
+    <path d="M248 373H1094" stroke="#334155" stroke-opacity="0.72"/>
+    <path d="M248 471H1094" stroke="#334155" stroke-opacity="0.72"/>
+    <path d="M248 569H1094" stroke="#334155" stroke-opacity="0.72"/>
+
+    <path d="M284 324L356 422L428 422L500 422L572 422L644 324L716 422L788 422L860 520L950 520L1034 520L1034 596" stroke="#64748B" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 7"/>
+    <path d="M644 340V378H716V410" stroke="#A78BFA" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrowBlue)"/>
+
+    <g filter="url(#shadow)">
+      <circle cx="284" cy="324" r="12" class="model"/>
+      <text x="284" y="328" text-anchor="middle" font-size="9" font-weight="800" fill="#DBEAFE">04</text>
+      <rect x="242" y="276" width="84" height="42" rx="14" class="card"/>
+      <text x="284" y="295" text-anchor="middle" class="tiny">读取 Issue</text>
+      <text x="284" y="311" text-anchor="middle" class="micro">property docs</text>
+
+      <rect x="346" y="412" width="20" height="20" rx="5" class="tool" transform="rotate(45 356 422)"/>
+      <text x="356" y="426" text-anchor="middle" font-size="8" font-weight="800" fill="#EDE9FE">07</text>
+      <rect x="316" y="432" width="80" height="34" rx="14" class="card"/>
+      <text x="356" y="447" text-anchor="middle" class="tiny">Search</text>
+      <text x="356" y="461" text-anchor="middle" class="mono micro">grep → misc.py</text>
+
+      <rect x="418" y="412" width="20" height="20" rx="5" class="tool" transform="rotate(45 428 422)"/>
+      <text x="428" y="426" text-anchor="middle" font-size="8" font-weight="800" fill="#EDE9FE">10</text>
+      <rect x="388" y="382" width="80" height="34" rx="14" class="card"/>
+      <text x="428" y="397" text-anchor="middle" class="tiny">Read</text>
+      <text x="428" y="411" text-anchor="middle" class="micro">读取 __init__</text>
+
+      <rect x="490" y="412" width="20" height="20" rx="5" class="tool" transform="rotate(45 500 422)"/>
+      <text x="500" y="426" text-anchor="middle" font-size="8" font-weight="800" fill="#EDE9FE">11</text>
+      <rect x="460" y="432" width="80" height="34" rx="14" class="card"/>
+      <text x="500" y="447" text-anchor="middle" class="tiny">Python</text>
+      <text x="500" y="461" text-anchor="middle" class="mono micro">False</text>
+
+      <rect x="562" y="412" width="20" height="20" rx="5" class="tool" transform="rotate(45 572 422)"/>
+      <text x="572" y="426" text-anchor="middle" font-size="8" font-weight="800" fill="#EDE9FE">14</text>
+      <rect x="532" y="382" width="80" height="34" rx="14" class="card"/>
+      <text x="572" y="397" text-anchor="middle" class="tiny">复现 Bug</text>
+      <text x="572" y="411" text-anchor="middle" class="micro" fill="#FCA5A5">property None</text>
+
+      <circle cx="644" cy="324" r="12" class="model"/>
+      <text x="644" y="328" text-anchor="middle" font-size="9" font-weight="800" fill="#DBEAFE">15</text>
+      <rect x="592" y="274" width="104" height="36" rx="14" fill="#101827" stroke="#7C3AED"/>
+      <text x="644" y="289" text-anchor="middle" class="tiny" fill="#DDD6FE">Root Cause</text>
+      <text x="644" y="303" text-anchor="middle" class="tiny" fill="#DDD6FE">已确定</text>
+      <rect x="706" y="412" width="20" height="20" rx="5" class="tool" transform="rotate(45 716 422)"/>
+      <text x="716" y="426" text-anchor="middle" font-size="8" font-weight="800" fill="#EDE9FE">16</text>
+      <rect x="676" y="432" width="80" height="34" rx="14" class="card"/>
+      <text x="716" y="447" text-anchor="middle" class="tiny">Read</text>
+      <text x="716" y="461" text-anchor="middle" class="mono micro">predicted.json</text>
+
+      <rect x="778" y="412" width="20" height="20" rx="5" class="tool" transform="rotate(45 788 422)"/>
+      <text x="788" y="426" text-anchor="middle" font-size="8" font-weight="800" fill="#EDE9FE">18</text>
+      <rect x="748" y="382" width="80" height="34" rx="14" class="card"/>
+      <text x="788" y="397" text-anchor="middle" class="tiny">Git</text>
+      <text x="788" y="411" text-anchor="middle" class="mono micro">git apply</text>
+
+      <path d="M852 512L860 504L868 512L860 520Z" class="valid"/>
+      <text x="860" y="524" text-anchor="middle" font-size="8" font-weight="800" fill="#CCFBF1">20</text>
+      <rect x="820" y="528" width="80" height="34" rx="14" class="card"/>
+      <text x="860" y="543" text-anchor="middle" class="tiny">验证行为</text>
+      <text x="860" y="557" text-anchor="middle" class="micro" fill="#86EFAC">property pass</text>
+
+      <path d="M942 512L950 504L958 512L950 520Z" class="valid"/>
+      <text x="950" y="524" text-anchor="middle" font-size="8" font-weight="800" fill="#CCFBF1">22</text>
+      <rect x="910" y="482" width="80" height="34" rx="14" class="card"/>
+      <text x="950" y="497" text-anchor="middle" class="tiny">pytest</text>
+      <text x="950" y="511" text-anchor="middle" class="micro" fill="#86EFAC">2 passed</text>
+      <text x="974" y="524" class="micro" fill="#94A3B8">24</text>
+
+      <path d="M1026 512L1034 504L1042 512L1034 520Z" class="valid"/>
+      <text x="1034" y="524" text-anchor="middle" font-size="8" font-weight="800" fill="#CCFBF1">28</text>
+      <rect x="994" y="528" width="80" height="34" rx="14" class="card"/>
+      <text x="1034" y="543" text-anchor="middle" class="tiny">边界检查</text>
+      <text x="1034" y="557" text-anchor="middle" class="micro" fill="#86EFAC">edge passed</text>
+
+      <rect x="860" y="598" width="264" height="50" rx="25" fill="url(#decisionFill)" stroke="#34D399"/>
+      <path d="M900 610L904 619L914 620L906 626L908 636L900 630L892 636L894 626L886 620L896 619Z" class="decision"/>
+      <path d="M934 608V638" stroke="#34D399" stroke-opacity="0.45"/>
+      <text x="964" y="618" text-anchor="middle" class="micro" fill="#CFFAFE">Step</text>
+      <text x="964" y="633" text-anchor="middle" class="micro" fill="#CFFAFE">30</text>
+      <text x="1040" y="629" text-anchor="middle" font-size="15" font-weight="820" fill="#FFFFFF">APPROVE · 0.95</text>
+    </g>
+
+    <path d="M1034 650V686" stroke="#34D399" stroke-width="2" stroke-linecap="round" marker-end="url(#arrowGreen)"/>
+    <g filter="url(#shadow)">
+      <rect x="768" y="690" width="356" height="34" rx="17" fill="#0E1B1A" stroke="#0F766E"/>
+      <text x="794" y="711" class="tiny" fill="#99F6E4">Verifier</text>
+      <text x="874" y="711" class="tiny">GT: Resolved</text>
+      <text x="976" y="711" class="tiny">Correct</text>
+      <text x="1060" y="711" class="tiny" fill="#99F6E4">Reward 1</text>
+    </g>
+
+    <g opacity="0.96">
+      <rect x="246" y="690" width="354" height="32" rx="16" class="chip"/>
+      <circle cx="274" cy="706" r="5" fill="#60A5FA"/>
+      <text x="292" y="710" class="micro">模型 / Model</text>
+      <path d="M400 698L408 706L400 714L392 706Z" fill="#8B5CF6"/>
+      <text x="426" y="710" class="micro">工具 / Tool</text>
+      <path d="M524 698L532 706L524 714L516 706Z" fill="#14B8A6"/>
+      <text x="550" y="710" class="micro">验证</text>
+    </g>
+  </g>
+</svg>
