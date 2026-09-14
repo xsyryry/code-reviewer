@@ -1,6 +1,6 @@
 <svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">Benchmark Results</title>
-  <desc id="desc">131 PRs · SWE-Review-8B benchmark dashboard.</desc>
+  <desc id="desc">131 PRs · code-reviewer-8B benchmark dashboard.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="720" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#0B1120"/>
@@ -60,7 +60,7 @@
   <path d="M42 136H1158" stroke="#1E293B"/>
 
   <text x="82" y="93" class="title">Benchmark Results</text>
-  <text x="82" y="122" class="subtitle">131 PRs · SWE-Review-8B</text>
+  <text x="82" y="122" class="subtitle">131 PRs · code-reviewer-8B</text>
 
   <g filter="url(#shadow)">
     <rect x="70" y="166" width="690" height="498" rx="24" fill="#0B1220" stroke="#26364B"/>

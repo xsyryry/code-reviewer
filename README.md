@@ -22,6 +22,13 @@
 > **Code Reviewer 的核心不是“让大模型看更多代码”，而是让 Reviewer 主动决定需要什么证据。**
 > 它可以搜索仓库、阅读调用链、复现问题、执行测试，再基于代码与运行结果判断一个 Patch 是否真正解决了 Issue。
 
+## Highlights
+
+- **Agentic Code Review**：Reviewer 可主动搜索仓库、执行 Shell / Git / Pytest，在真实代码环境中收集证据后形成审查结论。
+- **Reviewer Model**：基于 Agentic Review trajectories 构建代码审查专用 `code-reviewer-8B`，由 vLLM 提供 131K Context 与原生 Tool Calling。
+- **Evaluation & Analysis**：完成 131 个互不重复 PR 评测，并用混淆矩阵与误判样本分析 Reviewer 决策行为。
+- **Engineering & Scaling**：完成本地模型 serving、Docker 沙箱、环境预热与并发调优，实测评测吞吐约提升 62%。
+
 ## How It Works
 
 Code Reviewer 将每个 Issue / Candidate PR 放入隔离的代码仓库环境，由 OpenHands 驱动 Reviewer 通过工具主动读取源码、搜索调用链、执行命令和测试。Reviewer 最终输出结构化 Review，再由 Verifier 根据 benchmark ground truth 判断审查决策是否正确。
@@ -61,7 +68,7 @@ Repository: `astropy/astropy` · Base commit: `26d147868f8a891a6009a25cd6a8576d2
        width="1000" />
 </p>
 
-### 🐛 The Bug
+### Bug 现象
 
 Astropy 的 `InheritDocstrings` metaclass 可以让 subclass method 自动继承父类 docstring，但 property 不行。
 
@@ -79,7 +86,7 @@ Base.prop.__doc__
 Derived.prop.__doc__ ❌ None
 ```
 
-### 🔧 The Candidate Patch
+### Candidate Patch
 
 核心修改来自真实 `predicted.json`，这里只展示最关键的 diff：
 
@@ -110,9 +117,9 @@ Derived.prop.__doc__ ❌ None
 +                                break
 ```
 
-The patch handles properties explicitly while preserving the existing method inheritance path.
+Patch 显式处理 property，同时保留原有 method inheritance 路径。
 
-### Evidence Collected
+### 证据收集
 
 #### ① Reproduced the bug
 
@@ -141,9 +148,9 @@ test_inherit_docstrings_property
 → 2 passed
 ```
 
-Additional property edge cases also passed.
+额外的 property 边界场景也通过。
 
-### Final Decision
+### 最终决策
 
 ✅ **APPROVE**
 
@@ -181,11 +188,7 @@ outputs/official100-new/retry50/results-final/2026-09-12__22-49-35/astropy__astr
 
 ## Benchmark Results
 
-在 131 个互不重复的 SWE-Review-Bench PR 样本上，Code Reviewer 达到 **64.1% Decision Accuracy**。
-
-但总体准确率并不能完整描述 Reviewer 行为：模型对已经正确修复的 PR 判断较好，却明显倾向于放过仍然存在问题的 PR，表现出显著的 over-approval bias。
-
-> 当前 131 个样本来自 `glm5_500` 的固定子集，不代表完整 500 / 1384-instance SWE-Review-Bench 官方结果。
+Code Reviewer 在固定 PR 子集上完成审查评测，并记录每个 Candidate PR 的 Approve / Request Changes 决策结果。
 
 | 样本数 | Decision Accuracy | Resolved Accuracy | Unresolved Accuracy |
 |:---:|:---:|:---:|:---:|
@@ -209,7 +212,7 @@ outputs/official100-new/retry50/results-final/2026-09-12__22-49-35/astropy__astr
 
 这里只比较完全相同的 **31 个 paired PR**，不和上面的 131-instance aggregate 混用。
 
-| Metric | GPT-5.6 Luna | SWE-Review-8B |
+| Metric | GPT-5.6 Luna | code-reviewer-8B |
 |---|---:|---:|
 | Decision Accuracy | 58.1% | **64.5%** |
 | Resolved PR Accuracy | 42.9% | **85.7%** |
@@ -217,6 +220,55 @@ outputs/official100-new/retry50/results-final/2026-09-12__22-49-35/astropy__astr
 | False Reject Rate | 57.1% | **14.3%** |
 | False Accept Rate | **10.0%** | 80.0% |
 
-同样的 31 个 PR 上，Review-SFT 模型显著缓解了通用模型的 over-rejection，但决策偏置转向另一端，出现明显 over-approval。
+同样的 31 个 PR 上，Review-SFT 模型减少了通用模型的 over-rejection，但决策偏置转向另一端，出现 over-approval。
 
-Paired transition: Luna 的 12 个 False Reject 中，**11 个**转为 True Accept；但 Luna 原本正确识别的 bad PR 中，**7 个**转为 False Accept。
+Paired transition：Luna 的 12 个 False Reject 中，**11 个**转为 True Accept；但 Luna 原本正确识别的 bad PR 中，**7 个**转为 False Accept。
+
+## Engineering & Scaling
+
+Code Reviewer 的一次完整 Review 往往持续数分钟，并涉及多轮模型推理、Tool Call、Docker 沙箱执行和测试，因此评测性能不仅取决于模型推理速度，也受到环境初始化、镜像拉取和 Agent 并发的影响。
+
+为了稳定运行大规模评测，对 Model Serving、Sandbox Bootstrap 和并发策略进行了单独优化。
+
+<p align="center">
+  <img src="assets/readme/engineering-scaling.svg"
+       alt="Code Reviewer engineering and scaling overview"
+       width="1000" />
+</p>
+
+### Model Serving
+
+- 在 NVIDIA A800 80GB 上使用 vLLM 部署 code-reviewer-8B。
+- 支持 131K Context、BF16、Tensor Parallel = 1、GPU Memory Utilization = 0.90。
+- Agent 通过本地 OpenAI-compatible endpoint 调用 Reviewer，并启用 Native Tool Calling 与 `hermes` Tool Call Parser。
+
+### Concurrency
+
+- 31-task run 使用 Harbor Agent concurrency = 3，约 3:22:56 完成，吞吐约 **9.17 tasks/h**。
+- 后续 8-task perf run 中，实际最大 model Running 约为 3，8 tasks / 32m19s，吞吐约 **14.85 tasks/h**。
+- 通过增大 Agent-side task queue，使 GPU 在任务环境切换、Tool Call、Shell、Git、pytest 和 repo exploration 期间持续获得新的推理请求。
+
+### Infrastructure Hardening
+
+| Bottleneck | Hardening |
+|---|---|
+| Docker image pull / mirror failure | 移除失效镜像源 + 镜像预热 |
+| Online uv bootstrap | 本地 uv binary + fallback installer |
+| Runtime asset drift | 同步必需 runtime 资源到 active package |
+
+> 经过环境预热和 runtime hardening 后，完成新增 **100 / 100 有效样本评测**。
+
+## Notes
+
+- 当前 Benchmark 结果来自固定的 **131 个互不重复 PR 子集**，不代表完整 SWE-Review-Bench 官方结果。
+- `9.17 → 14.85 tasks/h` 来自不同规模的实际并发实验，用于反映 runtime 调优趋势，并非严格同 workload 的 microbenchmark。
+
+## References
+
+- [SWE-Review-Bench](https://huggingface.co/datasets/Lego-X/SWE-Review-Bench) — benchmark
+- [SWE-Review-Traj](https://huggingface.co/datasets/Lego-X/SWE-Review-Traj) — review trajectories
+- [code-reviewer-8B](https://huggingface.co/Lego-X/SWE%2DReview%2D8B) — reviewer model
+- [SWE-bench Verified](https://www.swebench.com/) — benchmark subset
+- [OpenHands SDK](https://docs.openhands.dev/sdk) — software agent SDK
+- [Harbor](https://github.com/harbor-framework/harbor) — agent evaluation harness
+- [vLLM](https://github.com/vllm-project/vllm) — model serving
