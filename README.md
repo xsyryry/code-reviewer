@@ -29,6 +29,26 @@
 - **Evaluation & Analysis**：完成 131 个互不重复 PR 评测，并用混淆矩阵与误判样本分析 Reviewer 决策行为。
 - **Engineering & Scaling**：完成本地模型 serving、Docker 沙箱、环境预热与并发调优，实测评测吞吐约提升 62%。
 
+## 目录
+
+- [Highlights](#highlights)
+- [How It Works](#how-it-works)
+  - [Review Lifecycle](#review-lifecycle)
+- [One Review in Action](#one-review-in-action)
+  - [Bug 现象](#bug-现象)
+  - [Candidate Patch](#candidate-patch)
+  - [证据收集](#证据收集)
+  - [最终决策](#最终决策)
+- [Benchmark Results](#benchmark-results)
+  - [What We Learned](#what-we-learned)
+  - [General LLM vs Review-SFT](#general-llm-vs-review-sft)
+- [Engineering & Scaling](#engineering--scaling)
+  - [Model Serving](#model-serving)
+  - [Concurrency](#concurrency)
+  - [Infrastructure Hardening](#infrastructure-hardening)
+- [Notes](#notes)
+- [References](#references)
+
 ## How It Works
 
 Code Reviewer 将每个 Issue / Candidate PR 放入隔离的代码仓库环境，由 OpenHands 驱动 Reviewer 通过工具主动读取源码、搜索调用链、执行命令和测试。Reviewer 最终输出结构化 Review，再由 Verifier 根据 benchmark ground truth 判断审查决策是否正确。
